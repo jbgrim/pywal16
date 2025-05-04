@@ -61,9 +61,8 @@ def kitty():
                     "kitty",
                     "@",
                     "--to",
-                    "unix:/tmp/kitty_pywal",
-                    "set-colors",
-                    "--all",
+                    "unix:/tmp/kitty",
+                    "load-config",
                     os.path.join(CACHE_DIR, "colors-kitty.conf"),
                 ]
             )
