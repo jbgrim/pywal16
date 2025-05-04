@@ -301,7 +301,7 @@ def darken_color(color, amount):
 
 def darken_color_const(color, amount):
     """Darken a hex color"""
-    color = [max(0,int(col - amount))) for col in hex_to_rgb(color)]
+    color = [max(0,int(col - amount)) for col in hex_to_rgb(color)]
     return rgb_to_hex(color)
 
 
