@@ -491,16 +491,18 @@ def get(
 
         colors = colors_to_dict(colors, img)
 
-        colors["bg1"] = util.darken_color_const(colors["background"], 5)
-        colors["bg2"] = util.blend_color(colors["color5"], colors["background"], 0.8)
+        colors["bg1"] = util.darken_color_const(colors["special"]["background"], 5)
+        colors["bg2"] = util.blend_color(
+            colors["colors"]["color5"], colors["special"]["background"], 0.8
+        )
         colors["bg3"] = util.blend_color(
-            colors["foreground"], colors["background"], 0.95
+            colors["special"]["foreground"], colors["special"]["background"], 0.95
         )
         colors["bg4"] = util.blend_color(
-            colors["foreground"], colors["background"], 0.9
+            colors["special"]["foreground"], colors["special"]["background"], 0.9
         )
         colors["bg5"] = util.blend_color(
-            colors["foreground"], colors["background"], 0.85
+            colors["special"]["foreground"], colors["special"]["background"], 0.85
         )
 
         util.save_file_json(colors, cache_file)
