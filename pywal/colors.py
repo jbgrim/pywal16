@@ -484,6 +484,12 @@ def get(
 
         colors = colors_to_dict(colors, img)
 
+        colors["bg1"] = darken_color_const(colors["background"], 5)
+        colors["bg2"] = blend_color(colors["color5"], colors["background"], 0.8)
+        colors["bg3"] = blend_color(colors["foreground"], colors["background"], 0.95)
+        colors["bg4"] = blend_color(colors["foreground"], colors["background"], 0.9)
+        colors["bg5"] = blend_color(colors["foreground"], colors["background"], 0.85)
+
         util.save_file_json(colors, cache_file)
         logging.info("Generation complete.")
 
