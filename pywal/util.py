@@ -299,6 +299,11 @@ def darken_color(color, amount):
     color = [int(col * (1 - amount)) for col in hex_to_rgb(color)]
     return rgb_to_hex(color)
 
+def darken_color_const(color, amount):
+    """Darken a hex color"""
+    color = [max(0,int(col - amount))) for col in hex_to_rgb(color)]
+    return rgb_to_hex(color)
+
 
 def lighten_color(color, amount):
     """Lighten a hex color."""
@@ -306,14 +311,14 @@ def lighten_color(color, amount):
     return rgb_to_hex(color)
 
 
-def blend_color(color, color2):
+def blend_color(color, color2, factor=0.5):
     """Blend two colors together."""
     r1, g1, b1 = hex_to_rgb(color)
     r2, g2, b2 = hex_to_rgb(color2)
 
-    r3 = int(0.5 * r1 + 0.5 * r2)
-    g3 = int(0.5 * g1 + 0.5 * g2)
-    b3 = int(0.5 * b1 + 0.5 * b2)
+    r3 = int(factor * r1 + (1-factor) * r2)
+    g3 = int(factor * g1 + (1-factor) * g2)
+    b3 = int(factor * b1 + (1-factor) * b2)
 
     return rgb_to_hex((r3, g3, b3))
 
