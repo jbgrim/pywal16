@@ -77,15 +77,42 @@ def shade_16(colors, light, cols16):
     # detect dict type
     if "color0" in colors:
         k_v = [
-                "color0", "color1", "color2", "color3",
-                "color4", "color5", "color6", "color7",
-                "color8", "color9", "color10", "color11",
-                "color12", "color13", "color14", "color15",
-              ]
+            "color0",
+            "color1",
+            "color2",
+            "color3",
+            "color4",
+            "color5",
+            "color6",
+            "color7",
+            "color8",
+            "color9",
+            "color10",
+            "color11",
+            "color12",
+            "color13",
+            "color14",
+            "color15",
+        ]
     else:
         k_v = [
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-              ]
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+        ]
 
     if cols16:
         if light:
@@ -202,13 +229,9 @@ def ensure_contrast(colors, contrast, light, image):
     # dark or light theme
     try:
         if light:
-            luminance_desired = (background_luminance + 0.05) / float(
-                contrast
-            ) - 0.05
+            luminance_desired = (background_luminance + 0.05) / float(contrast) - 0.05
         else:
-            luminance_desired = (background_luminance + 0.05) * float(
-                contrast
-            ) - 0.05
+            luminance_desired = (background_luminance + 0.05) * float(contrast) - 0.05
     except ValueError:
         logging.error("ensure_contrast(): Contrast valued could not be parsed")
         return colors
@@ -247,30 +270,21 @@ def ensure_contrast(colors, contrast, light, image):
             not light
             and util.Color(
                 util.rgb_to_hex(
-                    [
-                        int(channel * 255)
-                        for channel in colorsys.hsv_to_rgb(h, s, 1)
-                    ]
+                    [int(channel * 255) for channel in colorsys.hsv_to_rgb(h, s, 1)]
                 )
             ).w3_luminance
             >= luminance_desired
         ):
-            colors[index] = binary_luminance_adjust(
-                luminance_desired, h, s, s, v, 1
-            )
+            colors[index] = binary_luminance_adjust(luminance_desired, h, s, s, v, 1)
         # If the color is to be lighter than background and increasing value
         # to 1 doesn't produce the desired luminance, additionally decrease
         # saturation
         elif not light:
-            colors[index] = binary_luminance_adjust(
-                luminance_desired, h, 0, s, 1, 1
-            )
+            colors[index] = binary_luminance_adjust(luminance_desired, h, 0, s, 1, 1)
         # If the color is to be darker than background, produce desired
         # luminance by decreasing value, and raising saturation
         else:
-            colors[index] = binary_luminance_adjust(
-                luminance_desired, h, s, 1, 0, v
-            )
+            colors[index] = binary_luminance_adjust(luminance_desired, h, s, 1, 0, v)
 
     return colors
 
@@ -291,10 +305,7 @@ def binary_luminance_adjust(
         if (
             util.Color(
                 util.rgb_to_hex(
-                    [
-                        int(channel * 255)
-                        for channel in colorsys.hsv_to_rgb(hue, s, v)
-                    ]
+                    [int(channel * 255) for channel in colorsys.hsv_to_rgb(hue, s, v)]
                 )
             ).w3_luminance
             >= luminance_desired
@@ -443,14 +454,10 @@ def get(
 
     # home_dylan_img_jpg_backend_1.2.2.json
     if not contrast or contrast == "":
-        cache_name = cache_fname(
-            img, backend, light, cache_dir, sat,
-            c16=cols16
-        )
+        cache_name = cache_fname(img, backend, light, cache_dir, sat, c16=cols16)
     else:
         cache_name = cache_fname(
-            img, backend, light, cache_dir, sat,
-            c16=cols16, cst=float(contrast)
+            img, backend, light, cache_dir, sat, c16=cols16, cst=float(contrast)
         )
 
     cache_file = os.path.join(*cache_name)
@@ -484,11 +491,17 @@ def get(
 
         colors = colors_to_dict(colors, img)
 
-        colors["bg1"] = darken_color_const(colors["background"], 5)
-        colors["bg2"] = blend_color(colors["color5"], colors["background"], 0.8)
-        colors["bg3"] = blend_color(colors["foreground"], colors["background"], 0.95)
-        colors["bg4"] = blend_color(colors["foreground"], colors["background"], 0.9)
-        colors["bg5"] = blend_color(colors["foreground"], colors["background"], 0.85)
+        colors["bg1"] = util.darken_color_const(colors["background"], 5)
+        colors["bg2"] = util.blend_color(colors["color5"], colors["background"], 0.8)
+        colors["bg3"] = util.blend_color(
+            colors["foreground"], colors["background"], 0.95
+        )
+        colors["bg4"] = util.blend_color(
+            colors["foreground"], colors["background"], 0.9
+        )
+        colors["bg5"] = util.blend_color(
+            colors["foreground"], colors["background"], 0.85
+        )
 
         util.save_file_json(colors, cache_file)
         logging.info("Generation complete.")
