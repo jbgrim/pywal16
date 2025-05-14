@@ -496,13 +496,13 @@ def get(
             colors["colors"]["color5"], colors["special"]["background"], 0.8
         )
         colors["bg3"] = util.blend_color(
-            colors["special"]["foreground"], colors["special"]["background"], 0.95
+            colors["special"]["foreground"], colors["special"]["background"], 0.05
         )
         colors["bg4"] = util.blend_color(
-            colors["special"]["foreground"], colors["special"]["background"], 0.9
+            colors["special"]["foreground"], colors["special"]["background"], 0.1
         )
         colors["bg5"] = util.blend_color(
-            colors["special"]["foreground"], colors["special"]["background"], 0.85
+            colors["special"]["foreground"], colors["special"]["background"], 0.15
         )
 
         util.save_file_json(colors, cache_file)
